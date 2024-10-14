@@ -1,0 +1,13 @@
+{
+  "name": "com.cryptosteam.sdk",
+  "displayName": "CryptoSteam SDK",
+  "version": "1.0.0",
+  "unity": "2019.0",
+  "description": "CryptoSteam SDK",
+  "category": "Unity",
+  "dependencies": {},
+  "author": {
+    "name": "CryptoSteamSDK"
+  },
+  "type": "library"
+}
