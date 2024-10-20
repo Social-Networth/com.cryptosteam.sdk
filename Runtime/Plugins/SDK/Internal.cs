@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using AOT;
-using UnityEngine;
 #if UNITY_WEBGL && !UNITY_EDITOR
 using System.Runtime.InteropServices;
 #endif
@@ -16,7 +16,7 @@ namespace CryptoSteam
             
 #region API Method: isAdEnabled
             
-            private static AwaitableCompletionSource<bool> isAdEnabledCS;
+            private static TaskCompletionSource<bool> isAdEnabledCS;
             [MonoPInvokeCallback(typeof(Action<int>))] private static void isAdEnabledCallback(bool val) => isAdEnabledCS.TrySetResult(val);
 
             #if UNITY_WEBGL && !UNITY_EDITOR
@@ -25,17 +25,17 @@ namespace CryptoSteam
             private static void isAdEnabled(Action<bool> cb) => cb(true);
             #endif
 
-            public static Awaitable<bool> isAdEnabledAsync()
+            public static Task<bool> isAdEnabledAsync()
             {
-                isAdEnabledCS = new AwaitableCompletionSource<bool>();
+                isAdEnabledCS = new TaskCompletionSource<bool>();
                 isAdEnabled(isAdEnabledCallback);
-                return isAdEnabledCS.Awaitable;
+                return isAdEnabledCS.Task;
             }
 #endregion
             
 #region API Method: getProfile
             
-            private static AwaitableCompletionSource<string> getProfileCS;
+            private static TaskCompletionSource<string> getProfileCS;
             [MonoPInvokeCallback(typeof(Action<int>))] private static void getProfileCallback(string val) => getProfileCS.TrySetResult(val);
 
             #if UNITY_WEBGL && !UNITY_EDITOR
@@ -44,11 +44,11 @@ namespace CryptoSteam
             private static void getProfile(Action<string> cb) => cb(null);
             #endif
 
-            public static Awaitable<string> getProfileAsync()
+            public static Task<string> getProfileAsync()
             {
-                getProfileCS = new AwaitableCompletionSource<string>();
+                getProfileCS = new TaskCompletionSource<string>();
                 getProfile(getProfileCallback);
-                return getProfileCS.Awaitable;
+                return getProfileCS.Task;
             }
 #endregion
 

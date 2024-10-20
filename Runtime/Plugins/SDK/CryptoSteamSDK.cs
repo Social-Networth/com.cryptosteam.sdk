@@ -1,12 +1,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CryptoSteam
 {
     [Serializable]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class CryptoSteamSDKProfile
+    public class Profile
     {
         public string id;
         public string name;
@@ -15,7 +16,7 @@ namespace CryptoSteam
     
     [Serializable]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class CryptoSteamSDKConfig
+    public class Config
     {
         public string orientation;
         public string[] supportedDevices;
@@ -23,10 +24,10 @@ namespace CryptoSteam
     
     public static partial class CryptoSteamSDK
     {
-        public static CryptoSteamSDKConfig GetConfig() => JsonUtility.FromJson<CryptoSteamSDKConfig>(Internal.getConfig());
+        public static Config GetConfig() => JsonUtility.FromJson<Config>(Internal.getConfig());
         public static string CreateReceipt() => Internal.createReceipt();
-        public static async Awaitable<bool> IsAdEnabledAsync() => await Internal.isAdEnabledAsync();
-        public static async Awaitable<CryptoSteamSDKProfile> GetProfileAsync() => JsonUtility.FromJson<CryptoSteamSDKProfile>(await Internal.getProfileAsync());
+        public static async Task<bool> IsAdEnabledAsync() => await Internal.isAdEnabledAsync();
+        public static async Task<Profile> GetProfileAsync() => JsonUtility.FromJson<Profile>(await Internal.getProfileAsync());
         public static string GetVersion() => Internal.getVersion();
         
         // New methods
