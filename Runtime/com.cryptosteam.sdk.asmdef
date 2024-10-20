@@ -1,6 +1,6 @@
 {
     "name": "com.cryptosteam.sdk",
-    "rootNamespace": "",
+    "rootNamespace": "CryptoSteam",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

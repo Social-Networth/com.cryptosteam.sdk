@@ -1,5 +1,6 @@
 mergeInto(LibraryManager.library, {
   
+  
   getConfig: function() {
     var str = JSON.stringify(window.CryptoSteamSDK.getConfig().config);
     
@@ -18,21 +19,25 @@ mergeInto(LibraryManager.library, {
     return buffer;
   },
   
-  isAdEnabled: function() {
-    return window.CryptoSteamSDK.isAdEnabled();
+  isAdEnabled: function(cb) {
+    window.CryptoSteamSDK.isAdEnabled().then(response => {
+        dynCall_vi(cb, response);
+    });
   },
   
-  getProfile: function() {
-    var str = JSON.stringify(window.CryptoSteamSDK.getProfile().profile);
+  getProfile: function(cb) {
+  
+    window.CryptoSteamSDK.getProfile().then(response => {
+        
+        var str = JSON.stringify(response)
+        
+        var bufferSize = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(str, buffer, bufferSize);
+        
+        dynCall_vi(cb, buffer);
+    });
     
-    var bufferSize = lengthBytesUTF8(str) + 1;
-    var buffer = _malloc(bufferSize);
-    stringToUTF8(str, buffer, bufferSize);
-    return buffer;
-  },
-  
-  trackLaunch: function() {
-    window.CryptoSteamSDK.trackLaunch();
   },
   
   getVersion: function() {
@@ -45,11 +50,11 @@ mergeInto(LibraryManager.library, {
   },
   
    isAdRunning: function() {
-      return window.CryptoSteamSDKLocal.isAdRunning();
+      return window.CryptoSteamEmuSDK.isAdRunning();
    },
    
    runAd: function() {
-     return window.CryptoSteamSDKLocal.runAd();
+     return window.CryptoSteamEmuSDK.runAd();
    },
     
 });
