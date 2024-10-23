@@ -52,38 +52,86 @@ namespace CryptoSteam
             }
 #endregion
 
+#region API Method: getBalance
+            
+            private static TaskCompletionSource<string> getBalanceCS;
+            [MonoPInvokeCallback(typeof(Action<int>))] private static void getBalanceCallback(string val) => getBalanceCS.TrySetResult(val);
+
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void getBalance(Action<string> callback);
+            #else
+            private static void getBalance(Action<string> cb) => cb(null);
+            #endif
+
+            public static Task<string> getBalanceAsync()
+            {
+                getBalanceCS = new TaskCompletionSource<string>();
+                getBalance(getBalanceCallback);
+                return getBalanceCS.Task;
+            }
+#endregion
+
+
+#region API Method: requestAd
+            
+            private static TaskCompletionSource<string> requestAdCS;
+            [MonoPInvokeCallback(typeof(Action<int>))] private static void requestAdCallback(string val) => requestAdCS.TrySetResult(val);
+
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void requestAd(Action<string> callback);
+            #else
+            private static void requestAd(Action<string> cb) => cb(null);
+            #endif
+
+            public static Task<string> requestAdAsync()
+            {
+                requestAdCS = new TaskCompletionSource<string>();
+                requestAd(requestAdCallback);
+                return requestAdCS.Task;
+            }
+#endregion
 
 
 
-
+// New methods
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern string getConfig();
+            [DllImport("__Internal")] public static extern void trackGameTimeTick();
 #else
-public static string getConfig() => null;
-#endif
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern string createReceipt();
-#else
-public static string createReceipt() => null;
+            public static void trackGameTimeTick() {}
 #endif
             
+        
+// Ready methods      
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern string getVersion();
 #else
             public static string getVersion() => null;
 #endif
-            
+
+// Not ready methods
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void runAd();
+            [DllImport("__Internal")] public static extern string getConfig();
 #else
-            public static void runAd() {}
+public static string getConfig() => null;
+#endif
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern string createReceipt(double number, double amount);
+#else
+public static string createReceipt(double number, double amount) => null;
 #endif
             
+            
+// Emu methods
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern bool isAdRunning();
 #else
             public static bool isAdRunning() => false;
+#endif
+            
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void emuRequestAd();
+#else
+            public static void emuRequestAd() {}
 #endif
         }
     }

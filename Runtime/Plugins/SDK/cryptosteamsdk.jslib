@@ -10,8 +10,8 @@ mergeInto(LibraryManager.library, {
     return buffer;
   },
   
-  createReceipt: function() {
-    var str = window.CryptoSteamSDK.createReceipt();
+  createReceipt: function(number, amount) {
+    var str = window.CryptoSteamSDK.createReceipt(number, amount);
     
     var bufferSize = lengthBytesUTF8(str) + 1;
     var buffer = _malloc(bufferSize);
@@ -26,7 +26,6 @@ mergeInto(LibraryManager.library, {
   },
   
   getProfile: function(cb) {
-  
     window.CryptoSteamSDK.getProfile().then(response => {
         
         var str = JSON.stringify(response)
@@ -37,7 +36,6 @@ mergeInto(LibraryManager.library, {
         
         dynCall_vi(cb, buffer);
     });
-    
   },
   
   getVersion: function() {
@@ -49,12 +47,30 @@ mergeInto(LibraryManager.library, {
     return buffer;
   },
   
-   isAdRunning: function() {
-      return window.CryptoSteamEmuSDK.isAdRunning();
-   },
-   
-   runAd: function() {
-     return window.CryptoSteamEmuSDK.runAd();
-   },
+  // Emu methods
+  isAdRunning: function() {
+     return window.CryptoSteamEmuSDK.isAdRunning();
+  },
+  emuRequestAd: function() {
+     return window.CryptoSteamEmuSDK.requestAd();
+  },
+  
+  // New methods 
+  trackGameTimeTick: function() {
+    return window.CryptoSteamEmuSDK.trackGameTimeTick();
+  },
+    
+  getBalance: function(cb) {
+    window.CryptoSteamSDK.getBalance().then(response => {
+       var str = response.toString()
+       
+       var bufferSize = lengthBytesUTF8(str) + 1;
+       var buffer = _malloc(bufferSize);
+       stringToUTF8(str, buffer, bufferSize);
+       
+       dynCall_vi(cb, buffer);
+    });
+  },
+  
     
 });
