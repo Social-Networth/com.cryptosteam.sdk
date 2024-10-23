@@ -57,7 +57,7 @@ mergeInto(LibraryManager.library, {
   
   // New methods 
   trackGameTimeTick: function() {
-    return window.CryptoSteamEmuSDK.trackGameTimeTick();
+    return window.CryptoSteamSDK.trackGameTimeTick();
   },
     
   getBalance: function(cb) {
