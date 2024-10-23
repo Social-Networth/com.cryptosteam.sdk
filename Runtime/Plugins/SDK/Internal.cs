@@ -72,27 +72,6 @@ namespace CryptoSteam
 #endregion
 
 
-#region API Method: requestAd
-            
-            private static TaskCompletionSource<string> requestAdCS;
-            [MonoPInvokeCallback(typeof(Action<int>))] private static void requestAdCallback(string val) => requestAdCS.TrySetResult(val);
-
-            #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void requestAd(Action<string> callback);
-            #else
-            private static void requestAd(Action<string> cb) => cb(null);
-            #endif
-
-            public static Task<string> requestAdAsync()
-            {
-                requestAdCS = new TaskCompletionSource<string>();
-                requestAd(requestAdCallback);
-                return requestAdCS.Task;
-            }
-#endregion
-
-
-
 // New methods
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern void trackGameTimeTick();
