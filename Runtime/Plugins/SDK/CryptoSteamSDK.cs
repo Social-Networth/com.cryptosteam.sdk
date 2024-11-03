@@ -45,14 +45,17 @@ namespace CryptoSteam
         public static async Task<bool> IsAdEnabledAsync() => await Internal.isAdEnabledAsync();
         public static async Task<Profile> GetProfileAsync() => JsonUtility.FromJson<Profile>(await Internal.getProfileAsync());
         public static string GetVersion() => Internal.getVersion();
-        
-        // New methods
-        public static string CreateReceipt(double number, double amount) => Internal.createReceipt(number, amount);
         public static void TrackGameTimeTick() => Internal.trackGameTimeTick();
         public static async Task<string> GetBalanceAsync() => await Internal.getBalanceAsync();
-        public static void SimpleRequestAd() => Internal.emuRequestAd();
+        
+        // New methods
+        public static string GetStartParam() => Internal.getStartParam();
+        
+        // Not ready methods
+        public static string CreateReceipt(double number, double amount) => Internal.createReceipt(number, amount);
         
         // Emu 
+        public static void SimpleRequestAd() => Internal.emuRequestAd();
         public static bool IsAdRunning() => Internal.isAdRunning();
     }
 }

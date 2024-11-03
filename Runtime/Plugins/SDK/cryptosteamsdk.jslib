@@ -46,20 +46,10 @@ mergeInto(LibraryManager.library, {
     stringToUTF8(str, buffer, bufferSize);
     return buffer;
   },
-  
-  // Emu methods
-  isAdRunning: function() {
-     return window.CryptoSteamEmuSDK.isAdRunning();
-  },
-  emuRequestAd: function() {
-     return window.CryptoSteamEmuSDK.requestAd();
-  },
-  
-  // New methods 
+
   trackGameTimeTick: function() {
     return window.CryptoSteamSDK.trackGameTimeTick();
-  },
-    
+  },    
   getBalance: function(cb) {
     window.CryptoSteamSDK.getBalance().then(response => {
        var str = response.toString()
@@ -71,6 +61,18 @@ mergeInto(LibraryManager.library, {
        dynCall_vi(cb, buffer);
     });
   },
+ 
   
-    
+  // Emu methods
+  isAdRunning: function() {
+     return window.CryptoSteamEmuSDK.isAdRunning();
+  },
+  emuRequestAd: function() {
+     return window.CryptoSteamEmuSDK.requestAd();
+  },
+  getStartParam: function() {
+     return window.CryptoSteamEmuSDK.getStartParam();
+  },
+  
+     
 });

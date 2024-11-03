@@ -74,9 +74,9 @@ namespace CryptoSteam
 
 // New methods
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void trackGameTimeTick();
+            [DllImport("__Internal")] public static extern string getStartParam();
 #else
-            public static void trackGameTimeTick() {}
+            public static string getStartParam() => null;
 #endif
             
         
@@ -85,6 +85,12 @@ namespace CryptoSteam
             [DllImport("__Internal")] public static extern string getVersion();
 #else
             public static string getVersion() => null;
+#endif
+            
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void trackGameTimeTick();
+#else
+            public static void trackGameTimeTick() {}
 #endif
 
 // Not ready methods
@@ -112,6 +118,7 @@ public static string createReceipt(double number, double amount) => null;
 #else
             public static void emuRequestAd() {}
 #endif
+
         }
     }
 }
