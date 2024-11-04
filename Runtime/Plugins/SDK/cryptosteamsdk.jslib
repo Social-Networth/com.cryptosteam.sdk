@@ -71,8 +71,13 @@ mergeInto(LibraryManager.library, {
      return window.CryptoSteamEmuSDK.requestAd();
   },
   getStartParam: function() {
-     return window.CryptoSteamEmuSDK.getStartParam();
+  
+    var str = window.CryptoSteamEmuSDK.getStartParam();
+    var bufferSize = lengthBytesUTF8(str) + 1;
+    var buffer = _malloc(bufferSize);
+    stringToUTF8(str, buffer, bufferSize);
+    return buffer
   },
   
-     
+    
 });
