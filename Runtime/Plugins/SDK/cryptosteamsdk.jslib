@@ -79,5 +79,10 @@ mergeInto(LibraryManager.library, {
     return buffer
   },
   
+  setShareParam: function(param) {
+    window.CryptoSteamEmuSDK.ShareParam = param
+    // window.CryptoSteamEmuSDK.setShareParam(param)
+  },
+  
     
 });

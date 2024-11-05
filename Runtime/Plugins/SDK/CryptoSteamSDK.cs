@@ -47,9 +47,11 @@ namespace CryptoSteam
         public static string GetVersion() => Internal.getVersion();
         public static void TrackGameTimeTick() => Internal.trackGameTimeTick();
         public static async Task<string> GetBalanceAsync() => await Internal.getBalanceAsync();
+        public static string GetStartParam() => Internal.getStartParam();
         
         // New methods
-        public static string GetStartParam() => Internal.getStartParam();
+        public static string SetShareParam(string param) => Internal.setShareParam(param);
+        
         
         // Not ready methods
         public static string CreateReceipt(double number, double amount) => Internal.createReceipt(number, amount);

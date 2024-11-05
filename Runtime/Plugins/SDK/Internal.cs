@@ -74,13 +74,19 @@ namespace CryptoSteam
 
 // New methods
 #if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern string setShareParam(string param);
+#else
+            public static string setShareParam(string param) => null;
+#endif
+
+        
+// Ready methods
+#if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern string getStartParam();
 #else
             public static string getStartParam() => null;
 #endif
             
-        
-// Ready methods      
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern string getVersion();
 #else
