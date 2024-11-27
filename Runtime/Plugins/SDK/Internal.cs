@@ -52,6 +52,25 @@ namespace CryptoSteam
             }
 #endregion
 
+#region API Method: getShopItems
+            
+private static TaskCompletionSource<string> getShopItemsCS;
+[MonoPInvokeCallback(typeof(Action<int>))] private static void getShopItemsCallback(string val) => getShopItemsCS.TrySetResult(val);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void getShopItems(Action<string> callback);
+#else
+private static void getShopItems(Action<string> cb) => cb(null);
+#endif
+
+public static Task<string> getShopItemsAsync()
+{
+    getShopItemsCS = new TaskCompletionSource<string>();
+    getShopItems(getShopItemsCallback);
+    return getShopItemsCS.Task;
+}
+#endregion
+
 #region API Method: getBalance
             
             private static TaskCompletionSource<string> getBalanceCS;
@@ -74,13 +93,18 @@ namespace CryptoSteam
 
 // New methods
 #if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void buyShopItem(int itemId);
+#else
+            public static void buyShopItem(int itemId) {}
+#endif
+
+// Ready methods      
+#if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern string setShareParam(string param);
 #else
             public static string setShareParam(string param) => null;
 #endif
 
-        
-// Ready methods
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern string getStartParam();
 #else
@@ -94,29 +118,22 @@ namespace CryptoSteam
 #endif
             
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void trackGameTimeTick();
-#else
-            public static void trackGameTimeTick() {}
-#endif
-
-// Not ready methods
-#if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern string getConfig();
 #else
-public static string getConfig() => null;
+            public static string getConfig() => null;
 #endif
-#if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern string createReceipt(double number, double amount);
-#else
-public static string createReceipt(double number, double amount) => null;
-#endif
-            
             
 // Emu methods
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern bool isAdRunning();
 #else
             public static bool isAdRunning() => false;
+#endif
+            
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void reloadAd();
+#else
+            public static void reloadAd() {}
 #endif
             
 #if UNITY_WEBGL && !UNITY_EDITOR

@@ -38,6 +38,19 @@ mergeInto(LibraryManager.library, {
     });
   },
   
+  getShopItems: function(cb) {
+    window.CryptoSteamSDK.getShopItems().then(response => {
+        
+        var str = JSON.stringify(response)
+        
+        var bufferSize = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(str, buffer, bufferSize);
+        
+        dynCall_vi(cb, buffer);
+    });
+  },
+  
   getVersion: function() {
     var str = window.CryptoSteamSDK.getVersion();
     
@@ -47,9 +60,6 @@ mergeInto(LibraryManager.library, {
     return buffer;
   },
 
-  trackGameTimeTick: function() {
-    return window.CryptoSteamSDK.trackGameTimeTick();
-  },    
   getBalance: function(cb) {
     window.CryptoSteamSDK.getBalance().then(response => {
        var str = response.toString()
@@ -61,15 +71,24 @@ mergeInto(LibraryManager.library, {
        dynCall_vi(cb, buffer);
     });
   },
+  
+  buyShopItem: function(itemId) {
+      window.CryptoSteamSDK.buyShopItem(itemId)
+  },
  
   
   // Emu methods
   isAdRunning: function() {
      return window.CryptoSteamEmuSDK.isAdRunning();
   },
+  reloadAd: function() {
+     window.CryptoSteamEmuSDK.reloadAd();
+  },
+  
   emuRequestAd: function() {
      return window.CryptoSteamEmuSDK.requestAd();
   },
+  
   getStartParam: function() {
   
     var str = window.CryptoSteamEmuSDK.getStartParam();
@@ -81,8 +100,6 @@ mergeInto(LibraryManager.library, {
   
   setShareParam: function(param) {
     window.CryptoSteamEmuSDK.ShareParam = param
-    // window.CryptoSteamEmuSDK.setShareParam(param)
-  },
+  }
   
-    
 });
