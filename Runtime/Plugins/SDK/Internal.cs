@@ -74,7 +74,7 @@ public static Task<string> getShopItemsAsync()
 #region API Method: getBalance
             
             private static TaskCompletionSource<string> getBalanceCS;
-            [MonoPInvokeCallback(typeof(Action<int>))] private static void getBalanceCallback(string val) => getBalanceCS.TrySetResult(val);
+            [MonoPInvokeCallback(typeof(Action<string>))] private static void getBalanceCallback(string val) => getBalanceCS.TrySetResult(val);
 
             #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern void getBalance(Action<string> callback);
@@ -90,13 +90,24 @@ public static Task<string> getShopItemsAsync()
             }
 #endregion
 
+#region API Method: buyShopItem
+            
+            private static TaskCompletionSource<string> buyShopItemCS;
+            [MonoPInvokeCallback(typeof(Action<int>))] private static void buyShopItemCallback(string val) => buyShopItemCS.TrySetResult(val);
 
-// New methods
-#if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void buyShopItem(int itemId);
-#else
-            public static void buyShopItem(int itemId) {}
-#endif
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void buyShopItem(int itemId, Action<string> callback);
+            #else
+            private static void buyShopItem(int itemId, Action<string> cb) => cb(null);
+            #endif
+
+            public static Task<string> buyShopItemAsync(int itemId)
+            {
+                buyShopItemCS = new TaskCompletionSource<string>();
+                buyShopItem(itemId, buyShopItemCallback);
+                return buyShopItemCS.Task;
+            }
+#endregion
 
 // Ready methods      
 #if UNITY_WEBGL && !UNITY_EDITOR

@@ -41,7 +41,7 @@ mergeInto(LibraryManager.library, {
   getShopItems: function(cb) {
     window.CryptoSteamSDK.getShopItems().then(response => {
         
-        var str = JSON.stringify(response)
+        var str = "{ \"items\": " + JSON.stringify(response) + "}";
         
         var bufferSize = lengthBytesUTF8(str) + 1;
         var buffer = _malloc(bufferSize);
@@ -72,11 +72,18 @@ mergeInto(LibraryManager.library, {
     });
   },
   
-  buyShopItem: function(itemId) {
-      window.CryptoSteamSDK.buyShopItem(itemId)
+  buyShopItem: function(itemId, cb) {
+    window.CryptoSteamSDK.buyShopItem(itemId).then(response => {
+       var str = 'ok'
+       
+       var bufferSize = lengthBytesUTF8(str) + 1;
+       var buffer = _malloc(bufferSize);
+       stringToUTF8(str, buffer, bufferSize);
+       
+       dynCall_vi(cb, buffer);
+    });
   },
- 
-  
+
   // Emu methods
   isAdRunning: function() {
      return window.CryptoSteamEmuSDK.isAdRunning();

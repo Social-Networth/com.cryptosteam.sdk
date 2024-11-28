@@ -162,6 +162,21 @@ namespace CryptoSteam
         public string invoice_link;
     }
 
+    
+    /// <summary>
+    /// Represents the response from get shop items
+    /// </summary>
+    [Serializable]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class ShopItemsResponse
+    {
+        /// <summary>
+        /// List of shop items.
+        /// </summary>
+        public ShopItem[] items;
+    }
+
     /// <summary>
     /// Provides various methods for interacting with the CryptoSteam SDK.
     /// </summary>
@@ -230,13 +245,13 @@ namespace CryptoSteam
         /// Retrieves shop items.
         /// </summary>
         /// <returns>A list of shop items.</returns>
-        public static async Task<ShopItem[]> GetShopItems() => JsonUtility.FromJson<ShopItem[]>(await Internal.getShopItemsAsync());
+        public static async Task<ShopItemsResponse> GetShopItems() => JsonUtility.FromJson<ShopItemsResponse>(await Internal.getShopItemsAsync());
 
         /// <summary>
         /// Buy shop item.
         /// </summary>
         /// <param name="itemId">ID of item</param>
-        public static void BuyShopItem(int itemId) => Internal.buyShopItem(itemId);
+        public static async Task BuyShopItem(int itemId) => await Internal.buyShopItemAsync(itemId);
 
         /// <summary>
         /// Requests an advertisement to be shown.
