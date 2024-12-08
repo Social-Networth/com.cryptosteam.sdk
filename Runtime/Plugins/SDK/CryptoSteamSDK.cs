@@ -180,10 +180,28 @@ namespace CryptoSteam
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Achievement
     {
-        public int id;
+        /// <summary>
+        /// Achievement ID
+        /// </summary>
+        public uint id;
+        /// <summary>
+        /// Achievement name
+        /// </summary>
         public string name;
+        
+        /// <summary>
+        /// Achievement description
+        /// </summary>
         public string description;
+        
+        /// <summary>
+        /// Achieved status
+        /// </summary>
         public bool achieved;
+        
+        /// <summary>
+        /// Icon url
+        /// </summary>
         public string icon;
     }
     
