@@ -135,7 +135,7 @@ namespace CryptoSteam
         /// <summary>
         /// The price of the shop item.
         /// </summary>
-        public decimal price;
+        public int price;
 
         /// <summary>
         /// The date and time when the shop item was created.
@@ -146,6 +146,16 @@ namespace CryptoSteam
         /// The date and time when the shop item was last updated.
         /// </summary>
         public DateTime updated;
+        
+        /// <summary>
+        /// Purchased status
+        /// </summary>
+        public bool purchased;
+        
+        /// <summary>
+        /// Quantity of purchased items
+        /// </summary>
+        public int quantity;
     }
 
     /// <summary>
@@ -162,6 +172,20 @@ namespace CryptoSteam
         public string invoice_link;
     }
 
+    /// <summary>
+    /// Represents achievement
+    /// </summary>
+    [Serializable]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class Achievement
+    {
+        public int id;
+        public string name;
+        public string description;
+        public bool achieved;
+        public string icon;
+    }
     
     /// <summary>
     /// Represents the response from get shop items
@@ -245,14 +269,17 @@ namespace CryptoSteam
         /// Retrieves shop items.
         /// </summary>
         /// <returns>A list of shop items.</returns>
-        public static async Task<ShopItemsResponse> GetShopItems() => JsonUtility.FromJson<ShopItemsResponse>(await Internal.getShopItemsAsync());
+        public static async Task<ShopItemsResponse> GetShopItems()
+        {
+            return JsonUtility.FromJson<ShopItemsResponse>(await Internal.getShopItemsAsync());
+        }
 
         /// <summary>
         /// Buy shop item.
         /// </summary>
         /// <param name="itemId">ID of item</param>
         public static async Task BuyShopItem(int itemId) => await Internal.buyShopItemAsync(itemId);
-
+        
         /// <summary>
         /// Requests an advertisement to be shown.
         /// </summary>
@@ -268,5 +295,58 @@ namespace CryptoSteam
         /// Reload active advertisement
         /// </summary>
         public static void ReloadAd() => Internal.reloadAd();
+        
+        
+        // New methods
+        
+        
+        /// <summary>
+        /// Show share button for join new players into multiplayer session right from game overlay
+        /// </summary>
+        /// <param name="roomId">Your internal sessionId/roomId</param>
+        public static void ShowShareButton(string roomId) {}
+
+        /// <summary>
+        /// Hide share button
+        /// </summary>
+        public static void HideShareButton() {}
+
+        /// <summary>
+        /// Get current user locale
+        /// </summary>
+        /// <returns>User locale</returns>
+        public static string GetLocale() => null;
+        
+        /// <summary>
+        /// Key-value storage (similar to PlayerPrefs). Set value.
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <param name="value">Value</param>
+        public static void SetValue(string key, string value) {}
+
+        /// <summary>
+        /// Key-value storage (similar to PlayerPrefs). Get value.
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <returns>Value or null if value not exist</returns>
+        public static string GetValue(string key) => null;
+
+        /// <summary>
+        /// Get shop item
+        /// </summary>
+        /// <param name="itemId">ID of item</param>
+        public static async Task<ShopItem> GetShopItem(int itemId) => null;
+
+        /// <summary>
+        /// Unlock achievement/trophy for player
+        /// </summary>
+        /// <param name="id"></param>
+        public static void SetAchievement(string id) {}
+
+        /// <summary>
+        /// Get all achievements available for game
+        /// </summary>
+        /// <returns></returns>
+        public static Task<Achievement> GetAchievements() => null;
     }
 }
