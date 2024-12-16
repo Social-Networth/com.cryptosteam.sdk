@@ -51,6 +51,19 @@ mergeInto(LibraryManager.library, {
     });
   },
   
+  getPurchasedShopItems: function(cb) {
+    window.CryptoSteamSDK.getPurchasedShopItems().then(response => {
+        
+        var str = JSON.stringify(response);
+        
+        var bufferSize = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(str, buffer, bufferSize);
+        
+        dynCall_vi(cb, buffer);
+    });
+  },
+  
   getVersion: function() {
     var str = window.CryptoSteamSDK.getVersion();
     

@@ -148,11 +148,6 @@ namespace CryptoSteam
         public DateTime updated;
         
         /// <summary>
-        /// Purchased status
-        /// </summary>
-        public bool purchased;
-        
-        /// <summary>
         /// Quantity of purchased items
         /// </summary>
         public int quantity;
@@ -284,14 +279,22 @@ namespace CryptoSteam
         public static async Task<InvoiceResponse> CreateInvoice(string title, string description, decimal amount) => null;
 
         /// <summary>
-        /// Retrieves shop items.
+        /// Retrieves all shop items.
         /// </summary>
         /// <returns>A list of shop items.</returns>
         public static async Task<ShopItemsResponse> GetShopItems()
         {
             return JsonUtility.FromJson<ShopItemsResponse>(await Internal.getShopItemsAsync());
         }
-
+        
+        /// <summary>
+        /// Retrieves purchased shop items.
+        /// </summary>
+        public static async Task<ShopItemsResponse> GetPurchasedShopItems()
+        {
+            return JsonUtility.FromJson<ShopItemsResponse>(await Internal.getPurchasedShopItemsAsync());
+        }
+        
         /// <summary>
         /// Buy shop item.
         /// </summary>
@@ -314,20 +317,11 @@ namespace CryptoSteam
         /// </summary>
         public static void ReloadAd() => Internal.reloadAd();
         
-        
-        // New methods
-        
-        
         /// <summary>
         /// Show share button for join new players into multiplayer session right from game overlay
         /// </summary>
         /// <param name="roomId">Your internal sessionId/roomId</param>
-        public static void ShowShareButton(string roomId) {}
-
-        /// <summary>
-        /// Hide share button
-        /// </summary>
-        public static void HideShareButton() {}
+        public static void ShowSharing(string roomId) {}
 
         /// <summary>
         /// Get current user locale
@@ -350,12 +344,6 @@ namespace CryptoSteam
         public static string GetValue(string key) => null;
 
         /// <summary>
-        /// Get shop item
-        /// </summary>
-        /// <param name="itemId">ID of item</param>
-        public static async Task<ShopItem> GetShopItem(int itemId) => null;
-
-        /// <summary>
         /// Unlock achievement/trophy for player
         /// </summary>
         /// <param name="id"></param>
@@ -366,5 +354,6 @@ namespace CryptoSteam
         /// </summary>
         /// <returns></returns>
         public static Task<Achievement> GetAchievements() => null;
+   
     }
 }

@@ -71,6 +71,25 @@ public static Task<string> getShopItemsAsync()
 }
 #endregion
 
+#region API Method: getPurchasedShopItems
+            
+private static TaskCompletionSource<string> getPurchasedShopItemsCS;
+[MonoPInvokeCallback(typeof(Action<int>))] private static void getPurchasedShopItemsCallback(string val) => getPurchasedShopItemsCS.TrySetResult(val);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void getPurchasedShopItems(Action<string> callback);
+#else
+private static void getPurchasedShopItems(Action<string> cb) => cb(null);
+#endif
+
+public static Task<string> getPurchasedShopItemsAsync()
+{
+    getPurchasedShopItemsCS = new TaskCompletionSource<string>();
+    getPurchasedShopItems(getPurchasedShopItemsCallback);
+    return getPurchasedShopItemsCS.Task;
+}
+#endregion
+
 #region API Method: getBalance
             
             private static TaskCompletionSource<string> getBalanceCS;
