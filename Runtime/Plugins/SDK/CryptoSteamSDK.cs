@@ -260,7 +260,7 @@ namespace CryptoSteam
         /// </summary>
         /// <param name="param">The parameter to share.</param>
         /// <returns>A result indicating the status of the operation.</returns>
-        public static string Share(string param) => Internal.setShareParam(param);
+        public static string Share(string param) => Internal.showSharing(param);
         
         /// <summary>
         /// Tracks a custom game event. For example level completions or level ups.

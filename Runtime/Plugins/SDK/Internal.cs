@@ -130,9 +130,9 @@ public static Task<string> getPurchasedShopItemsAsync()
 
 // Ready methods      
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern string setShareParam(string param);
+            [DllImport("__Internal")] public static extern string showSharing(string param);
 #else
-            public static string setShareParam(string param) => null;
+            public static string showSharing(string param) => null;
 #endif
 
 #if UNITY_WEBGL && !UNITY_EDITOR
