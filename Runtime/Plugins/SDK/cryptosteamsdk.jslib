@@ -89,7 +89,7 @@ mergeInto(LibraryManager.library, {
     
   showSharing: function(url, text) {
       window.CryptoSteamSDK.showSharing(url, text)
-  }
+  },
  
   getStartParam: function() {  
     var str = window.CryptoSteamEmuSDK.getStartParam();
@@ -169,7 +169,7 @@ mergeInto(LibraryManager.library, {
   
   setValue: function(key, value) {
     window.CryptoSteamSDK.setValue(key, value)
-  }
+  },
 
   getValue: function(key) {
       var str = window.CryptoSteamSDK.getValue(key);
@@ -177,7 +177,7 @@ mergeInto(LibraryManager.library, {
       var buffer = _malloc(bufferSize);
       stringToUTF8(str, buffer, bufferSize);
       return buffer
-  }
+  },
  
   removeValue: function(key) {
       var str = window.CryptoSteamSDK.removeValue(key);
@@ -185,7 +185,7 @@ mergeInto(LibraryManager.library, {
       var buffer = _malloc(bufferSize);
       stringToUTF8(str, buffer, bufferSize);
       return buffer
-  }
+  },
   
   //----------------------------------------
   //-- Achievements
