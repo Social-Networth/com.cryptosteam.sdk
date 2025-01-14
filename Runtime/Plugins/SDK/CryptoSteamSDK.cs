@@ -213,17 +213,36 @@ namespace CryptoSteam
         /// </summary>
         public ShopItem[] items;
     }
+    
+    /// <summary>
+    /// Represents the response from purchase shop item
+    /// </summary>
+    [Serializable]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public class PurchaseConfirmResponse
+    {
+        /// <summary>
+        /// Status: "success" | "error"
+        /// </summary>
+        public PurchaseStatus status;
+    }
+
+    [Serializable]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public enum PurchaseStatus
+    {
+        Success,
+        Error,
+    }
 
     /// <summary>
     /// Provides various methods for interacting with the CryptoSteam SDK.
     /// </summary>
     public static partial class CryptoSteamSDK
     {
-        /// <summary>
-        /// Retrieves the configuration for loaded game
-        /// </summary>
-        /// <returns>The configuration of game.</returns>
-        public static GameConfig GetConfig() => JsonUtility.FromJson<GameConfig>(Internal.getConfig());
+        #region Advertisement
 
         /// <summary>
         /// Checks if advertisements are enabled.
@@ -231,80 +250,11 @@ namespace CryptoSteam
         /// <returns>True if ads are enabled; otherwise, false.</returns>
         public static async Task<bool> IsAdEnabled() => await Internal.isAdEnabledAsync();
 
-        /// <summary>
-        /// Retrieves the user's profile.
-        /// </summary>
-        /// <returns>The user's profile.</returns>
-        public static async Task<UserProfile> GetProfile() => JsonUtility.FromJson<UserProfile>(await Internal.getProfileAsync());
-
-        /// <summary>
-        /// Retrieves the version of the SDK.
-        /// </summary>
-        /// <returns>The version string.</returns>
-        public static string GetVersion() => Internal.getVersion();
-
-        /// <summary>
-        /// Retrieves the user's balance.
-        /// </summary>
-        /// <returns>The balance as a string.</returns>
-        public static async Task<string> GetBalance() => await Internal.getBalanceAsync();
-
-        /// <summary>
-        /// Retrieves any start parameter of the application. Currently used for transferring multiplayer session IDs to games.
-        /// </summary>
-        /// <returns>The start parameter.</returns>
-        public static string GetStartParam() => Internal.getStartParam();
-
-        /// <summary>
-        /// Shares any parameter via the Telegram Share API. Currently used for sharing links to games with multiplayer session ID.
-        /// </summary>
-        /// <param name="param">The parameter to share.</param>
-        /// <returns>A result indicating the status of the operation.</returns>
-        public static string Share(string param) => Internal.showSharing(param);
-        
-        /// <summary>
-        /// Tracks a custom game event. For example level completions or level ups.
-        /// </summary>
-        /// <param name="eventName">Any custom name. E.g. level_completed</param>
-        /// <param name="eventData">Any related data. E.g. completed level name</param>
-        public static void TrackGameEvent(string eventName, string eventData) {}
-
-        /// <summary>
-        /// Creates an invoice.
-        /// </summary>
-        /// <param name="title">The title of the invoice.</param>
-        /// <param name="description">The description of the invoice.</param>
-        /// <param name="amount">The amount for the invoice.</param>
-        /// <returns>The response from the invoice creation.</returns>
-        public static async Task<InvoiceResponse> CreateInvoice(string title, string description, decimal amount) => null;
-
-        /// <summary>
-        /// Retrieves all shop items.
-        /// </summary>
-        /// <returns>A list of shop items.</returns>
-        public static async Task<ShopItemsResponse> GetShopItems()
-        {
-            return JsonUtility.FromJson<ShopItemsResponse>(await Internal.getShopItemsAsync());
-        }
-        
-        /// <summary>
-        /// Retrieves purchased shop items.
-        /// </summary>
-        public static async Task<ShopItemsResponse> GetPurchasedShopItems()
-        {
-            return JsonUtility.FromJson<ShopItemsResponse>(await Internal.getPurchasedShopItemsAsync());
-        }
-        
-        /// <summary>
-        /// Buy shop item.
-        /// </summary>
-        /// <param name="itemId">ID of item</param>
-        public static async Task BuyShopItem(int itemId) => await Internal.buyShopItemAsync(itemId);
-        
+              
         /// <summary>
         /// Requests an advertisement to be shown.
         /// </summary>
-        public static void RequestAd() => Internal.emuRequestAd();
+        public static void RequestAd() => Internal.requestAd();
 
         /// <summary>
         /// Checks if an advertisement is currently running.
@@ -316,44 +266,151 @@ namespace CryptoSteam
         /// Reload active advertisement
         /// </summary>
         public static void ReloadAd() => Internal.reloadAd();
+
+        
+        #endregion
+
+        #region SDK Information
         
         /// <summary>
-        /// Show share button for join new players into multiplayer session right from game overlay
+        /// Retrieves the version of the SDK.
         /// </summary>
-        /// <param name="roomId">Your internal sessionId/roomId</param>
-        public static void ShowSharing(string roomId) {}
+        /// <returns>The version string.</returns>
+        public static string GetVersion() => Internal.getVersion();
+        
+        #endregion
 
+        #region Per-App Information
+
+        /// <summary>
+        /// Retrieves the configuration for loaded game
+        /// </summary>
+        /// <returns>The configuration of game.</returns>
+        public static GameConfig GetConfig() => JsonUtility.FromJson<GameConfig>(Internal.getConfig());
+        
+        #endregion
+
+        #region User
+        
+        /// <summary>
+        /// Retrieves the user's profile.
+        /// </summary>
+        /// <returns>The user's profile.</returns>
+        public static async Task<UserProfile> GetProfile() => JsonUtility.FromJson<UserProfile>(await Internal.getProfileAsync());
+
+        /// <summary>
+        /// Retrieves the user's balance.
+        /// </summary>
+        /// <returns>The balance as a string.</returns>
+        public static async Task<string> GetBalance() => await Internal.getBalanceAsync();
+        
+         
         /// <summary>
         /// Get current user locale
         /// </summary>
         /// <returns>User locale</returns>
-        public static string GetLocale() => null;
+        public static string GetLocale() => Internal.getLocale();
+
         
+        #endregion
+
+        #region Share
+        
+        /// <summary>
+        /// Retrieves any start parameter of the application. Currently used for transferring multiplayer session IDs to games.
+        /// </summary>
+        /// <returns>The start parameter.</returns>
+        public static string GetStartParam() => Internal.getStartParam();
+
+        /// <summary>
+        /// Show telegram's share dialog for join new players into multiplayer session right from game overlay
+        /// </summary>
+        /// <param name="url">Your internal sessionId/roomId</param>
+        /// <param name="text">Text in share dialog</param>
+        public static void ShowSharing(string url, string text) => Internal.showSharing(url, text);
+
+        #endregion
+        
+        #region IAP
+
+        /// <summary>
+        /// Retrieves all shop items.
+        /// </summary>
+        /// <returns>A list of shop items.</returns>
+        public static async Task<ShopItemsResponse> GetShopItems() => JsonUtility.FromJson<ShopItemsResponse>(await Internal.getShopItemsAsync());
+
+        /// <summary>
+        /// Retrieves purchased shop items.
+        /// </summary>
+        public static async Task<ShopItemsResponse> GetPurchasedShopItems() => JsonUtility.FromJson<ShopItemsResponse>(await Internal.getPurchasedShopItemsAsync());
+        
+        /// <summary>
+        /// [Obsolete] Buy shop item.
+        /// </summary>
+        /// <param name="itemId">ID of item</param>
+        [Obsolete("Please use OpenPurchaseConfirmModal() instead")]
+        public static async Task BuyShopItem(int itemId) => throw new NotImplementedException();
+        
+        /// <summary>
+        /// Buy shop item.
+        /// </summary>
+        /// <param name="itemId">Item ID</param>
+        public static async Task OpenPurchaseConfirmModal(int itemId) => await Internal.openPurchaseConfirmModalAsync(itemId);
+        
+        #endregion
+
+        #region PlayerPrefs
+
         /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Set value.
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <param name="value">Value</param>
-        public static void SetValue(string key, string value) {}
+        public static void SetValue(string key, string value) => Internal.setValue(key, value);
 
         /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Get value.
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <returns>Value or null if value not exist</returns>
-        public static string GetValue(string key) => null;
+        public static async Task<string> GetValue(string key) => await Internal.getValueAsync(key);
+        
+        /// <summary>
+        /// Key-value storage (similar to PlayerPrefs). Remove value by key.
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <returns>Value or null if value not exist</returns>
+        public static async Task<string> RemoveValue(string key) => await Internal.removeValueAsync(key);
+
+
+        #endregion
+        
+        #region Achievements
 
         /// <summary>
-        /// Unlock achievement/trophy for player
+        /// [NOT IMPLEMENTED] Unlock achievement/trophy for player
         /// </summary>
         /// <param name="id"></param>
-        public static void SetAchievement(string id) {}
+        public static void SetAchievement(string id) { throw new System.NotImplementedException(); }
 
         /// <summary>
-        /// Get all achievements available for game
+        /// [NOT IMPLEMENTED] Get all achievements available for game
         /// </summary>
         /// <returns></returns>
-        public static Task<Achievement> GetAchievements() => null;
-   
+        public static Task<Achievement> GetAchievements() => throw new System.NotImplementedException();
+
+        #endregion
+        
+        #region Game Events
+        
+        /// <summary>
+        /// NOT IMPLEMENTED] Tracks a custom game event. For example level completions or level ups.
+        /// </summary>
+        /// <param name="eventName">Any custom name. E.g. level_completed</param>
+        /// <param name="eventData">Any related data. E.g. completed level name</param>
+        public static void TrackGameEvent(string eventName, string eventData) => throw new NotImplementedException();
+        
+        #endregion
+        
     }
 }
