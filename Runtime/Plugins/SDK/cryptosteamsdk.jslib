@@ -123,7 +123,7 @@ mergeInto(LibraryManager.library, {
       console.log(item);
     
       window.CryptoSteamSDK.openPurchaseConfirmModal(item).then(response => {
-           var str = response.status
+           var str = JSON.stringify(response);
            
            var bufferSize = lengthBytesUTF8(str) + 1;
            var buffer = _malloc(bufferSize);

@@ -225,7 +225,8 @@ namespace CryptoSteam
         /// <summary>
         /// Status: "success" | "error"
         /// </summary>
-        public PurchaseStatus status;
+        public string status;
+        public bool IsSucessful => status == "success";
     }
 
     [Serializable]
@@ -350,12 +351,13 @@ namespace CryptoSteam
         /// <param name="itemId">ID of item</param>
         [Obsolete("Please use OpenPurchaseConfirmModal() instead")]
         public static async Task BuyShopItem(int itemId) => throw new NotImplementedException();
-        
+
         /// <summary>
         /// Buy shop item.
         /// </summary>
         /// <param name="itemId">Item ID</param>
-        public static async Task OpenPurchaseConfirmModal(int itemId) => await Internal.openPurchaseConfirmModalAsync(itemId);
+        public static async Task<PurchaseConfirmResponse> OpenPurchaseConfirmModal(int itemId) =>
+            JsonUtility.FromJson<PurchaseConfirmResponse>(await Internal.openPurchaseConfirmModalAsync(itemId));
         
         #endregion
 
@@ -380,7 +382,7 @@ namespace CryptoSteam
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <returns>Value or null if value not exist</returns>
-        public static async Task<string> RemoveValue(string key) => await Internal.removeValueAsync(key);
+        public static void RemoveValue(string key) => Internal.removeValue(key);
 
 
         #endregion

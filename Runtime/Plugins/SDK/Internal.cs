@@ -249,22 +249,11 @@ namespace CryptoSteam
             #endregion
             
             #region API Method: removeValue
-            
-            private static TaskCompletionSource<string> removeValueCS;
-            [MonoPInvokeCallback(typeof(Action<string>))] private static void removeValueCallback(string val) => removeValueCS.TrySetResult(val);
-
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void removeValue(string key, Action<string> callback);
+            [DllImport("__Internal")] public static extern void removeValue(string key);
 #else
-            private static void removeValue(string key, Action<string> cb) => cb(null);
+            public static void removeValue(string key) {}
 #endif
-
-            public static Task<string> removeValueAsync(string key)
-            {
-                removeValueCS = new TaskCompletionSource<string>();
-                removeValue(key, removeValueCallback);
-                return removeValueCS.Task;
-            }
             #endregion
             
             #endregion
