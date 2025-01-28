@@ -353,11 +353,21 @@ namespace CryptoSteam
         public static async Task BuyShopItem(int itemId) => throw new NotImplementedException();
 
         /// <summary>
-        /// Buy shop item.
+        /// Open purchase confirm modal to buy shop item
         /// </summary>
         /// <param name="itemId">Item ID</param>
         public static async Task<PurchaseConfirmResponse> OpenPurchaseConfirmModal(int itemId) =>
-            JsonUtility.FromJson<PurchaseConfirmResponse>(await Internal.openPurchaseConfirmModalAsync(itemId));
+            JsonUtility.FromJson<PurchaseConfirmResponse>(
+                await Internal.openPurchaseConfirmModalAsync(itemId, false, 0, 0, 0, 0));
+
+        /// <summary>
+        /// Open purchase confirm modal to buy shop item
+        /// </summary>
+        /// <param name="itemId">Item ID</param>
+        /// <param name="rect">Position of purchase-confirmation popup</param>
+        public static async Task<PurchaseConfirmResponse> OpenPurchaseConfirmModal(int itemId, Vector2Int rect) =>
+            JsonUtility.FromJson<PurchaseConfirmResponse>(
+                await Internal.openPurchaseConfirmModalAsync(itemId, true, rect.x, rect.y, 1, 1));
         
         #endregion
 

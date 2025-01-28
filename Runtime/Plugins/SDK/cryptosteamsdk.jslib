@@ -103,13 +103,13 @@ mergeInto(LibraryManager.library, {
   //-- IAP
   //----------------------------------------
   
-  openPurchaseConfirmModal: function(itemId, cb) {
+  openPurchaseConfirmModal: function(itemId, useRect, x, y, width, height, cb) {
     window.CryptoSteamSDK.getShopItems().then(response => {
     
       const item = response.find(item => item.id === itemId)
       
       if(!item) {
-          const str = 'error'
+          const str = 'item not found'
                    
           const bufferSize = lengthBytesUTF8(str) + 1;
           const buffer = _malloc(bufferSize);
@@ -118,11 +118,15 @@ mergeInto(LibraryManager.library, {
           dynCall_vi(cb, buffer);
           return;
       }
+
       
-      // debug
-      console.log(item);
-    
-      window.CryptoSteamSDK.openPurchaseConfirmModal(item).then(response => {
+      var rect = null;
+      
+      if(useRect) {
+        rect = { x, y, width, height }; 
+      } 
+   
+      window.CryptoSteamSDK.openPurchaseConfirmModal(item, rect).then(response => {
            var str = JSON.stringify(response);
            
            var bufferSize = lengthBytesUTF8(str) + 1;

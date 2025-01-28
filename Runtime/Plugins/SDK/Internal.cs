@@ -203,15 +203,15 @@ namespace CryptoSteam
             [MonoPInvokeCallback(typeof(Action<int>))] private static void openPurchaseConfirmModalCallback(string val) => openPurchaseConfirmModalCS.TrySetResult(val);
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void openPurchaseConfirmModal(int itemId, Action<string> callback);
+            [DllImport("__Internal")] public static extern void openPurchaseConfirmModal(int itemId,  bool useRect, int x, int y, int width, int height, Action<string> callback);
 #else
-            private static void openPurchaseConfirmModal(int itemId, Action<string> cb) => cb(null);
+            private static void openPurchaseConfirmModal(int itemId,  bool useRect, int x, int y, int width, int height, Action<string> cb) => cb(null);
 #endif
 
-            public static Task<string> openPurchaseConfirmModalAsync(int itemId)
+            public static Task<string> openPurchaseConfirmModalAsync(int itemId, bool useRect, int x, int y, int width, int height)
             {
                 openPurchaseConfirmModalCS = new TaskCompletionSource<string>();
-                openPurchaseConfirmModal(itemId, openPurchaseConfirmModalCallback);
+                openPurchaseConfirmModal(itemId, useRect, x, y, width, height, openPurchaseConfirmModalCallback);
                 return openPurchaseConfirmModalCS.Task;
             }
             #endregion
