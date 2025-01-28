@@ -164,27 +164,29 @@ mergeInto(LibraryManager.library, {
     
 
   //----------------------------------------
-  //-- PlayerPrefs
+  //-- Cloud Saves
   //----------------------------------------
   
   setValue: function(key, value) {
-    window.CryptoSteamSDK.setValue(key, value)
+    window.CryptoSteamSDK.setValue(UTF8ToString(key), UTF8ToString(value))
   },
 
-  getValue: function(key) {
-      var str = window.CryptoSteamSDK.getValue(key);
-      var bufferSize = lengthBytesUTF8(str) + 1;
-      var buffer = _malloc(bufferSize);
-      stringToUTF8(str, buffer, bufferSize);
-      return buffer
+  getValue: function(key, cb) {
+    window.CryptoSteamSDK.getValue(UTF8ToString(key)).then(response => {
+        var str = response;
+                  
+        var bufferSize = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(str, buffer, bufferSize);
+        
+        dynCall_vi(cb, buffer);
+    }).catch(response => {
+       dynCall_vi(cb, null);
+    });
   },
  
   removeValue: function(key) {
-      var str = window.CryptoSteamSDK.removeValue(key);
-      var bufferSize = lengthBytesUTF8(str) + 1;
-      var buffer = _malloc(bufferSize);
-      stringToUTF8(str, buffer, bufferSize);
-      return buffer
+    window.CryptoSteamSDK.removeValue(UTF8ToString(key));
   },
   
   //----------------------------------------

@@ -361,7 +361,7 @@ namespace CryptoSteam
         
         #endregion
 
-        #region PlayerPrefs
+        #region Cloud Saves
 
         /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Set value.

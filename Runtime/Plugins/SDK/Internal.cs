@@ -219,7 +219,7 @@ namespace CryptoSteam
             
             #endregion
             
-            #region PlayerPrefs
+            #region Cloud Saves
             
             #region API Method: setValue
 #if UNITY_WEBGL && !UNITY_EDITOR
