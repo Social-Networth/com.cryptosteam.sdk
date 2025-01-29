@@ -226,7 +226,7 @@ namespace CryptoSteam
         /// Status: "success" | "error"
         /// </summary>
         public string status;
-        public bool IsSucessful => status == "success";
+        public bool IsSucсessful => status == "success";
     }
 
     [Serializable]
