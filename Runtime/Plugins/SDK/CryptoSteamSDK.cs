@@ -372,20 +372,34 @@ namespace CryptoSteam
         #endregion
 
         #region Cloud Saves
+        
+        /// <summary>
+        /// (Sync) Key-value storage (similar to PlayerPrefs). Get value.
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <returns>Value or null if value not exist</returns>
+        public static string GetValue(string key) => Internal.getValueSync(key);
+
+        /// <summary>
+        /// (Sync) Key-value storage (similar to PlayerPrefs). Set value.
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <param name="value">Value</param>
+        public static void SetValue(string key, string value) => Internal.setValueSync(key, value);
 
         /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Set value.
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <param name="value">Value</param>
-        public static void SetValue(string key, string value) => Internal.setValue(key, value);
+        public static void SetValueAsync(string key, string value) => Internal.setValue(key, value);
 
         /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Get value.
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <returns>Value or null if value not exist</returns>
-        public static async Task<string> GetValue(string key) => await Internal.getValueAsync(key);
+        public static async Task<string> GetValueAsync(string key) => await Internal.getValueAsync(key);
         
         /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Remove value by key.

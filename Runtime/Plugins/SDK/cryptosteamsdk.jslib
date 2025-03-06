@@ -171,6 +171,20 @@ mergeInto(LibraryManager.library, {
   //-- Cloud Saves
   //----------------------------------------
   
+  setValueSync: function(key, value) {
+    window.CryptoSteamEmuSDK.setValueSync(UTF8ToString(key), UTF8ToString(value))
+  },
+  
+  getValueSync: function(key, cb) {
+      var str = window.CryptoSteamEmuSDK.getValueSync(UTF8ToString(key))
+                       
+      var bufferSize = lengthBytesUTF8(str) + 1;
+      var buffer = _malloc(bufferSize);
+      stringToUTF8(str, buffer, bufferSize);
+      
+      return buffer;
+  },
+    
   setValue: function(key, value) {
     window.CryptoSteamSDK.setValue(UTF8ToString(key), UTF8ToString(value))
   },
@@ -190,7 +204,7 @@ mergeInto(LibraryManager.library, {
   },
  
   removeValue: function(key) {
-    window.CryptoSteamSDK.removeValue(UTF8ToString(key));
+    window.CryptoSteamEmuSDK.removeValueSync(UTF8ToString(key));
   },
   
   //----------------------------------------

@@ -220,6 +220,22 @@ namespace CryptoSteam
             #endregion
             
             #region Cloud Saves
+
+            #region API Method: setValueSync
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void setValueSync(string key, string value);
+#else
+            public static void setValueSync(string key, string value) { }
+#endif
+            #endregion
+            
+            #region API Method: getValueSync
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern string getValueSync(string key);
+#else
+            public static string getValueSync(string key) { return null; }
+#endif
+            #endregion
             
             #region API Method: setValue
 #if UNITY_WEBGL && !UNITY_EDITOR
