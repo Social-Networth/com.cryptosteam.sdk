@@ -1,7 +1,7 @@
 {
   "name": "com.cryptosteam.sdk",
   "displayName": "CryptoSteam SDK",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "unity": "2021.0",
   "description": "CryptoSteam SDK",
   "category": "Unity",

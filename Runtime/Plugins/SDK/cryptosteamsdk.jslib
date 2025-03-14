@@ -177,7 +177,11 @@ mergeInto(LibraryManager.library, {
   
   getValueSync: function(key, cb) {
       var str = window.CryptoSteamEmuSDK.getValueSync(UTF8ToString(key))
-                       
+      
+      if(!str) {
+        return null;
+      }
+      
       var bufferSize = lengthBytesUTF8(str) + 1;
       var buffer = _malloc(bufferSize);
       stringToUTF8(str, buffer, bufferSize);
