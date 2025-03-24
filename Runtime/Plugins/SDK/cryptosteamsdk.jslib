@@ -109,7 +109,7 @@ mergeInto(LibraryManager.library, {
       const item = response.find(item => item.id === itemId)
       
       if(!item) {
-          const str = 'item not found'
+          const str = 'item not found';
                    
           const bufferSize = lengthBytesUTF8(str) + 1;
           const buffer = _malloc(bufferSize);
@@ -127,16 +127,30 @@ mergeInto(LibraryManager.library, {
       } 
    
       window.CryptoSteamSDK.openPurchaseConfirmModal(item, rect).then(response => {
-           var str = JSON.stringify(response);
+           
+           var str;
+           try {
+            str = JSON.stringify(response);
+           }
+           catch(ex) {
+            str = "{ \"status\": " + "\"error\"" + "}";
+           }
            
            var bufferSize = lengthBytesUTF8(str) + 1;
            var buffer = _malloc(bufferSize);
            stringToUTF8(str, buffer, bufferSize);
            
            dynCall_vi(cb, buffer);
+        }).catch(response => {
+           const str = "{ \"status\": " + "\"error\"" + "}";
+                      
+           var bufferSize = lengthBytesUTF8(str) + 1;
+           var buffer = _malloc(bufferSize);
+           stringToUTF8(str, buffer, bufferSize);
+           
+           dynCall_vi(cb, buffer);
         });
-    
-    
+ 
     })  
   },
 
@@ -179,7 +193,7 @@ mergeInto(LibraryManager.library, {
       var str = window.CryptoSteamEmuSDK.getValueSync(UTF8ToString(key))
       
       if(!str) {
-        return null;
+        str = "";
       }
       
       var bufferSize = lengthBytesUTF8(str) + 1;
@@ -203,7 +217,13 @@ mergeInto(LibraryManager.library, {
         
         dynCall_vi(cb, buffer);
     }).catch(response => {
-       dynCall_vi(cb, null);
+        var str = "";
+                  
+        var bufferSize = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(str, buffer, bufferSize);
+        
+        dynCall_vi(cb, buffer);
     });
   },
  

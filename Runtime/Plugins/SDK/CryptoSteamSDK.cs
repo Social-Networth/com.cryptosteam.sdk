@@ -377,7 +377,7 @@ namespace CryptoSteam
         /// (Sync) Key-value storage (similar to PlayerPrefs). Get value.
         /// </summary>
         /// <param name="key">Unique key</param>
-        /// <returns>Value or null if value not exist</returns>
+        /// <returns>Value or string.Empty if value not exist</returns>
         public static string GetValue(string key) => Internal.getValueSync(key);
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace CryptoSteam
         /// Key-value storage (similar to PlayerPrefs). Get value.
         /// </summary>
         /// <param name="key">Unique key</param>
-        /// <returns>Value or null if value not exist</returns>
+        /// <returns>Value or string.Empty if value not exist</returns>
         public static async Task<string> GetValueAsync(string key) => await Internal.getValueAsync(key);
         
         /// <summary>
