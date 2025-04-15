@@ -14,6 +14,19 @@ namespace CryptoSteam
         private static class Internal
         {
             
+            #region Startup Events
+        
+                        
+            #region API Method: requestAd
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void gameReady();
+#else
+            public static void gameReady() {}
+#endif
+            #endregion
+
+            #endregion
+            
             #region Advertisement
             
             #region API Method: isAdEnabled
@@ -237,6 +250,14 @@ namespace CryptoSteam
 #endif
             #endregion
             
+            #region API Method: removeValue
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void removeValue(string key);
+#else
+            public static void removeValue(string key) {}
+#endif
+            #endregion
+            
             #region API Method: setValue
 #if UNITY_WEBGL && !UNITY_EDITOR
             [DllImport("__Internal")] public static extern void setValue(string key, string value);
@@ -262,14 +283,6 @@ namespace CryptoSteam
                 getValue(key, getValueCallback);
                 return getValueCS.Task;
             }
-            #endregion
-            
-            #region API Method: removeValue
-#if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void removeValue(string key);
-#else
-            public static void removeValue(string key) {}
-#endif
             #endregion
             
             #endregion

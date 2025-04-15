@@ -1,5 +1,13 @@
-mergeInto(LibraryManager.library, {
+var LIB = {
   
+  //----------------------------------------
+  //-- Startup Events
+  //----------------------------------------
+  
+  gameReady: function() {
+    return window.CryptoSteamSDK.gameReady();
+  },
+
   //----------------------------------------
   //-- Advertisement
   //----------------------------------------
@@ -18,6 +26,7 @@ mergeInto(LibraryManager.library, {
   requestAd: function() {
     return window.CryptoSteamEmuSDK.requestAd();
   },
+  
   
   //----------------------------------------
   //-- SDK Information
@@ -189,7 +198,7 @@ mergeInto(LibraryManager.library, {
     window.CryptoSteamEmuSDK.setValueSync(UTF8ToString(key), UTF8ToString(value))
   },
   
-  getValueSync: function(key, cb) {
+  getValueSync: function(key) {
       var str = window.CryptoSteamEmuSDK.getValueSync(UTF8ToString(key))
       
       if(!str) {
@@ -201,6 +210,10 @@ mergeInto(LibraryManager.library, {
       stringToUTF8(str, buffer, bufferSize);
       
       return buffer;
+  },
+  
+  removeValue: function(key) {
+    window.CryptoSteamEmuSDK.removeValueSync(UTF8ToString(key));
   },
     
   setValue: function(key, value) {
@@ -226,14 +239,12 @@ mergeInto(LibraryManager.library, {
         dynCall_vi(cb, buffer);
     });
   },
- 
-  removeValue: function(key) {
-    window.CryptoSteamEmuSDK.removeValueSync(UTF8ToString(key));
-  },
+
   
   //----------------------------------------
   //-- Achievements
   //----------------------------------------
+  
   
   // not implemented
   
@@ -244,4 +255,6 @@ mergeInto(LibraryManager.library, {
   // not implemented
   
  
-});
+}
+
+mergeInto(LibraryManager.library, LIB);

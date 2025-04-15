@@ -243,6 +243,16 @@ namespace CryptoSteam
     /// </summary>
     public static partial class CryptoSteamSDK
     {
+    
+        #region Startup Events
+        
+        /// <summary>
+        /// Send event what game is loaded and ready. Required.
+        /// </summary>
+        public static void GameReady() => Internal.gameReady();
+    
+        #endregion
+    
         #region Advertisement
 
         /// <summary>
@@ -388,6 +398,13 @@ namespace CryptoSteam
         public static void SetValue(string key, string value) => Internal.setValueSync(key, value);
 
         /// <summary>
+        /// Key-value storage (similar to PlayerPrefs). Remove value by key.
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <returns>Value or null if value not exist</returns>
+        public static void RemoveValue(string key) => Internal.removeValue(key);
+        
+        /// <summary>
         /// Key-value storage (similar to PlayerPrefs). Set value.
         /// </summary>
         /// <param name="key">Unique key</param>
@@ -401,12 +418,6 @@ namespace CryptoSteam
         /// <returns>Value or string.Empty if value not exist</returns>
         public static async Task<string> GetValueAsync(string key) => await Internal.getValueAsync(key);
         
-        /// <summary>
-        /// Key-value storage (similar to PlayerPrefs). Remove value by key.
-        /// </summary>
-        /// <param name="key">Unique key</param>
-        /// <returns>Value or null if value not exist</returns>
-        public static void RemoveValue(string key) => Internal.removeValue(key);
 
 
         #endregion
