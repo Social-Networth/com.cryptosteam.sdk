@@ -1,13 +1,13 @@
 {
-  "name": "com.cryptosteam.sdk",
-  "displayName": "CryptoSteam SDK",
-  "version": "1.3.3",
+  "name": "com.orbit.portalsdk",
+  "displayName": "Portal SDK for Unity",
+  "version": "1.4.0",
   "unity": "2021.0",
-  "description": "CryptoSteam SDK",
+  "description": "Portal SDK for Unity",
   "category": "Unity",
   "dependencies": {},
   "author": {
-    "name": "CryptoSteamSDK"
+    "name": "Orbit Software"
   },
   "type": "library"
 }

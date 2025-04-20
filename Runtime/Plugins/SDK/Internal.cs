@@ -6,9 +6,9 @@ using AOT;
 using System.Runtime.InteropServices;
 #endif
 
-namespace CryptoSteam
+namespace Orbit
 {
-    public static partial class CryptoSteamSDK
+    public static partial class PortalSDK
     {
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         private static class Internal

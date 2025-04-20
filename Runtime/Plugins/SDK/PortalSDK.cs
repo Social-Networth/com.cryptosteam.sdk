@@ -3,10 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CryptoSteam
+namespace Orbit
 {
     /// <summary>
-    /// Represents a user profile in the CryptoSteam SDK.
+    /// Represents a user profile
     /// </summary>
     [Serializable]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -17,11 +17,6 @@ namespace CryptoSteam
         /// The unique identifier of the user.
         /// </summary>
         public ulong id;
-        //
-        // /// <summary>
-        // /// Indicates whether the user is an administrator.
-        // /// </summary>
-        // public bool is_admin;
 
         /// <summary>
         /// The total experience points the user has earned.
@@ -47,46 +42,6 @@ namespace CryptoSteam
         /// The URL of the user's avatar image.
         /// </summary>
         public string avatar;
-        //
-        // /// <summary>
-        // /// The user's account balance.
-        // /// </summary>
-        // public ulong balance;
-        //
-        // /// <summary>
-        // /// Indicates whether the user's account is free from advertisements.
-        // /// </summary>
-        // public bool ads_free;
-        //
-        // /// <summary>
-        // /// The number of games associated with the user.
-        // /// </summary>
-        // public ulong games_count;
-        //
-        // /// <summary>
-        // /// The number of users the current user has invited.
-        // /// </summary>
-        // public ulong invited;
-
-        // /// <summary>
-        // /// The user's email address.
-        // /// </summary>
-        // public string email;
-        //
-        // /// <summary>
-        // /// The user's phone number.
-        // /// </summary>
-        // public string phone_number;
-        //
-        // /// <summary>
-        // /// The user's location or address.
-        // /// </summary>
-        // public string location;
-        //
-        // /// <summary>
-        // /// The user's date of birth.
-        // /// </summary>
-        // public string birth_date;
     }
 
 
@@ -110,7 +65,7 @@ namespace CryptoSteam
     }
     
     /// <summary>
-    /// Represents an item in the CryptoSteam SDK shop.
+    /// Represents an item
     /// </summary>
     [Serializable]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -239,9 +194,9 @@ namespace CryptoSteam
     }
 
     /// <summary>
-    /// Provides various methods for interacting with the CryptoSteam SDK.
+    /// Provides various methods for interacting with the PortalSDK.
     /// </summary>
-    public static partial class CryptoSteamSDK
+    public static partial class PortalSDK
     {
     
         #region Startup Events
@@ -354,13 +309,6 @@ namespace CryptoSteam
         /// Retrieves purchased shop items.
         /// </summary>
         public static async Task<ShopItemsResponse> GetPurchasedShopItems() => JsonUtility.FromJson<ShopItemsResponse>(await Internal.getPurchasedShopItemsAsync());
-        
-        /// <summary>
-        /// [Obsolete] Buy shop item.
-        /// </summary>
-        /// <param name="itemId">ID of item</param>
-        [Obsolete("Please use OpenPurchaseConfirmModal() instead")]
-        public static async Task BuyShopItem(int itemId) => throw new NotImplementedException();
 
         /// <summary>
         /// Open purchase confirm modal to buy shop item

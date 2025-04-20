@@ -1,6 +1,6 @@
 {
-    "name": "com.cryptosteam.sdk",
-    "rootNamespace": "CryptoSteam",
+    "name": "com.orbit.portalsdk",
+    "rootNamespace": "Orbit",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
