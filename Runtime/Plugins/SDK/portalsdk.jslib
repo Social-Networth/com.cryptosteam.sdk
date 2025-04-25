@@ -45,13 +45,16 @@ var LIB = {
   //-- Per-App Information
   //----------------------------------------
   
-  getConfig: function() {
-    var str = JSON.stringify(window.CryptoSteamSDK.getConfig().config);
-  
-    var bufferSize = lengthBytesUTF8(str) + 1;
-    var buffer = _malloc(bufferSize);
-    stringToUTF8(str, buffer, bufferSize);
-    return buffer;
+  getConfig: function(cb) {
+    window.CryptoSteamSDK.getConfig().then(response => {
+      var str = JSON.stringify(response)
+        
+      var bufferSize = lengthBytesUTF8(str) + 1;
+      var buffer = _malloc(bufferSize);
+      stringToUTF8(str, buffer, bufferSize);
+        
+      dynCall_vi(cb, buffer);
+    });
   },
     
    

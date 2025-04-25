@@ -89,11 +89,22 @@ namespace Orbit
             #region Per-App Information
             
             #region API Method: getConfig
+            
+            private static TaskCompletionSource<string> getConfigCS;
+            [MonoPInvokeCallback(typeof(Action<int>))] private static void getConfigCallback(string val) => getConfigCS.TrySetResult(val);
+
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern string getConfig();
+            [DllImport("__Internal")] public static extern void getConfig(Action<string> callback);
 #else
-            public static string getConfig() => null;
+            private static void getConfig(Action<string> cb) => cb(null);
 #endif
+
+            public static Task<string> getConfigAsync()
+            {
+                getConfigCS = new TaskCompletionSource<string>();
+                getConfig(getConfigCallback);
+                return getConfigCS.Task;
+            }
             #endregion
             
             #endregion

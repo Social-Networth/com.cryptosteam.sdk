@@ -252,7 +252,7 @@ namespace Orbit
         /// Retrieves the configuration for loaded game
         /// </summary>
         /// <returns>The configuration of game.</returns>
-        public static GameConfig GetConfig() => JsonUtility.FromJson<GameConfig>(Internal.getConfig());
+        public static async Task<GameConfig> GetConfig() => JsonUtility.FromJson<GameConfig>(await Internal.getConfigAsync());
         
         #endregion
 
