@@ -5,7 +5,7 @@ var LIB = {
   //----------------------------------------
   
   gameReady: function() {
-    return window.CryptoSteamSDK.gameReady();
+    return window.PortalSDK.gameReady();
   },
 
   //----------------------------------------
@@ -13,7 +13,7 @@ var LIB = {
   //----------------------------------------
   
   isAdEnabled: function(cb) {
-    window.CryptoSteamSDK.isAdEnabled().then(response => {
+    window.PortalSDK.isAdEnabled().then(response => {
         dynCall_vi(cb, response);
     });
   },
@@ -23,9 +23,18 @@ var LIB = {
   reloadAd: function() {
     window.PortalEmuSDK.reloadAd();
   },
-  requestAd: function() {
-    return window.PortalEmuSDK.requestAd();
+  requestAd: function(cb) {
+    
+    window.PortalSDK.requestAd().then(response => {
+        dynCall_vi(cb, response);
+    });
   },
+  requestRewardAd: function(cb) {
+    window.PortalSDK.requestRewardAd().then(response => {
+        dynCall_vi(cb, response);
+    });
+  },
+  
   
   
   //----------------------------------------
@@ -33,7 +42,7 @@ var LIB = {
   //----------------------------------------
   
   getVersion: function() {
-    var str = window.CryptoSteamSDK.getVersion();
+    var str = window.PortalSDK.getVersion();
 
     var bufferSize = lengthBytesUTF8(str) + 1;
     var buffer = _malloc(bufferSize);
@@ -46,7 +55,7 @@ var LIB = {
   //----------------------------------------
   
   getConfig: function(cb) {
-    window.CryptoSteamSDK.getConfig().then(response => {
+    window.PortalSDK.getConfig().then(response => {
       var str = JSON.stringify(response)
         
       var bufferSize = lengthBytesUTF8(str) + 1;
@@ -63,7 +72,7 @@ var LIB = {
   //----------------------------------------
   
   getProfile: function(cb) {
-    window.CryptoSteamSDK.getProfile().then(response => {
+    window.PortalSDK.getProfile().then(response => {
       
       var str = JSON.stringify(response)
       
@@ -76,7 +85,7 @@ var LIB = {
   },
     
   getBalance: function(cb) {
-    window.CryptoSteamSDK.getBalance().then(response => {
+    window.PortalSDK.getBalance().then(response => {
        var str = response.toString()
        
        var bufferSize = lengthBytesUTF8(str) + 1;
@@ -88,7 +97,7 @@ var LIB = {
   },
 
   getLocale: function() {  
-    var str = window.CryptoSteamSDK.getLocale();
+    var str = window.PortalSDK.getLocale();
     var bufferSize = lengthBytesUTF8(str) + 1;
     var buffer = _malloc(bufferSize);
     stringToUTF8(str, buffer, bufferSize);
@@ -100,7 +109,7 @@ var LIB = {
   //----------------------------------------
     
   showSharing: function(url, text) {
-      window.CryptoSteamSDK.showSharing(url, text)
+      window.PortalSDK.showSharing(url, text)
   },
  
   getStartParam: function() {  
@@ -116,7 +125,7 @@ var LIB = {
   //----------------------------------------
   
   openPurchaseConfirmModal: function(itemId, useRect, x, y, width, height, cb) {
-    window.CryptoSteamSDK.getShopItems().then(response => {
+    window.PortalSDK.getShopItems().then(response => {
     
       const item = response.find(item => item.id === itemId)
       
@@ -138,7 +147,7 @@ var LIB = {
         rect = { x, y, width, height }; 
       } 
    
-      window.CryptoSteamSDK.openPurchaseConfirmModal(item, rect).then(response => {
+      window.PortalSDK.openPurchaseConfirmModal(item, rect).then(response => {
            
            var str;
            try {
@@ -167,7 +176,7 @@ var LIB = {
   },
 
   getShopItems: function(cb) {
-      window.CryptoSteamSDK.getShopItems().then(response => {
+      window.PortalSDK.getShopItems().then(response => {
          
           var str = "{ \"items\": " + JSON.stringify(response) + "}";
           
@@ -180,7 +189,7 @@ var LIB = {
   },
     
   getPurchasedShopItems: function(cb) {
-      window.CryptoSteamSDK.getPurchasedShopItems().then(response => {
+      window.PortalSDK.getPurchasedShopItems().then(response => {
           
           var str = JSON.stringify(response);
           
@@ -220,11 +229,11 @@ var LIB = {
   },
     
   setValue: function(key, value) {
-    window.CryptoSteamSDK.setValue(UTF8ToString(key), UTF8ToString(value))
+    window.PortalSDK.setValue(UTF8ToString(key), UTF8ToString(value))
   },
 
   getValue: function(key, cb) {
-    window.CryptoSteamSDK.getValue(UTF8ToString(key)).then(response => {
+    window.PortalSDK.getValue(UTF8ToString(key)).then(response => {
         var str = response;
                   
         var bufferSize = lengthBytesUTF8(str) + 1;

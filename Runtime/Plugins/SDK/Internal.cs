@@ -65,11 +65,41 @@ namespace Orbit
             #endregion
             
             #region API Method: requestAd
+            
+            private static TaskCompletionSource<bool> requestAdCS;
+            [MonoPInvokeCallback(typeof(Action<int>))] private static void requestAdCallback(bool val) => requestAdCS.TrySetResult(val);
+
 #if UNITY_WEBGL && !UNITY_EDITOR
-            [DllImport("__Internal")] public static extern void requestAd();
+            [DllImport("__Internal")] public static extern void requestAd(Action<bool> callback);
 #else
-            public static void requestAd() {}
+            private static void requestAd(Action<bool> cb) => cb(true);
 #endif
+            public static Task<bool> requestAdAsync()
+            {
+                requestAdCS = new TaskCompletionSource<bool>();
+                requestAd(requestAdCallback);
+                return requestAdCS.Task;
+            }
+            
+            #endregion
+            
+            #region API Method: requestRewardAd
+            
+            private static TaskCompletionSource<bool> requestRewardAdCS;
+            [MonoPInvokeCallback(typeof(Action<int>))] private static void requestRewardAdCallback(bool val) => requestRewardAdCS.TrySetResult(val);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            [DllImport("__Internal")] public static extern void requestRewardAd(Action<bool> callback);
+#else
+            private static void requestRewardAd(Action<bool> cb) => cb(true);
+#endif
+            public static Task<bool> requestRewardAdAsync()
+            {
+                requestRewardAdCS = new TaskCompletionSource<bool>();
+                requestRewardAd(requestRewardAdCallback);
+                return requestRewardAdCS.Task;
+            }
+
             #endregion
             
             #endregion
