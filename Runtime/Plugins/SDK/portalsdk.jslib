@@ -18,13 +18,13 @@ var LIB = {
     });
   },
   isAdRunning: function() {
-    return window.PortalEmuSDK.isAdRunning();
+    console.log('[PortalSDK] isAdRunning obsolete');
+    return false;
   },
   reloadAd: function() {
-    window.PortalEmuSDK.reloadAd();
+    console.log('[PortalSDK] reloadAd obsolete');
   },
   requestAd: function(cb) {
-    
     window.PortalSDK.requestAd().then(response => {
         dynCall_vi(cb, response);
     });
@@ -251,21 +251,6 @@ var LIB = {
         dynCall_vi(cb, buffer);
     });
   },
-
-  
-  //----------------------------------------
-  //-- Achievements
-  //----------------------------------------
-  
-  
-  // not implemented
-  
-  //----------------------------------------
-  //-- Game Events
-  //----------------------------------------
-  
-  // not implemented
-  
  
 }
 

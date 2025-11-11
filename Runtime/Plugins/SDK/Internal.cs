@@ -328,15 +328,6 @@ namespace Orbit
             
             #endregion
             
-            #region Achievements
-            // not implemented
-            #endregion
-            
-            #region Game Events
-            // not implemented
-            #endregion
-         
-
         }
     }
 }

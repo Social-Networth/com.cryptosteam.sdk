@@ -230,15 +230,17 @@ namespace Orbit
         public static async Task<bool> RequestRewardAd() => await Internal.requestRewardAdAsync();
 
         /// <summary>
-        /// Checks if an advertisement is currently running.
+        /// [Obsolete] Checks if an advertisement is currently running.
         /// </summary>
         /// <returns>True if an ad is running; otherwise, false.</returns>
-        public static bool IsAdRunning() => Internal.isAdRunning();
+        [Obsolete]
+        public static bool IsAdRunning() => false;
 
         /// <summary>
-        /// Reload active advertisement
+        /// [Obsolete] Reload active advertisement
         /// </summary>
-        public static void ReloadAd() => Internal.reloadAd();
+        [Obsolete]
+        public static void ReloadAd() {}
 
         
         #endregion
@@ -360,47 +362,21 @@ namespace Orbit
         public static void RemoveValue(string key) => Internal.removeValue(key);
         
         /// <summary>
-        /// Key-value storage (similar to PlayerPrefs). Set value.
+        /// [Obsolete] Key-value storage (similar to PlayerPrefs). Set value.
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <param name="value">Value</param>
+        [Obsolete]
         public static void SetValueAsync(string key, string value) => Internal.setValue(key, value);
 
         /// <summary>
-        /// Key-value storage (similar to PlayerPrefs). Get value.
+        /// [Obsolete] Key-value storage (similar to PlayerPrefs). Get value.
         /// </summary>
         /// <param name="key">Unique key</param>
         /// <returns>Value or string.Empty if value not exist</returns>
+        [Obsolete]
         public static async Task<string> GetValueAsync(string key) => await Internal.getValueAsync(key);
         
-
-
-        #endregion
-        
-        #region Achievements
-
-        /// <summary>
-        /// [NOT IMPLEMENTED] Unlock achievement/trophy for player
-        /// </summary>
-        /// <param name="id"></param>
-        public static void SetAchievement(string id) { throw new System.NotImplementedException(); }
-
-        /// <summary>
-        /// [NOT IMPLEMENTED] Get all achievements available for game
-        /// </summary>
-        /// <returns></returns>
-        public static Task<Achievement> GetAchievements() => throw new System.NotImplementedException();
-
-        #endregion
-        
-        #region Game Events
-        
-        /// <summary>
-        /// NOT IMPLEMENTED] Tracks a custom game event. For example level completions or level ups.
-        /// </summary>
-        /// <param name="eventName">Any custom name. E.g. level_completed</param>
-        /// <param name="eventData">Any related data. E.g. completed level name</param>
-        public static void TrackGameEvent(string eventName, string eventData) => throw new NotImplementedException();
         
         #endregion
         
